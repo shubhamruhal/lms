@@ -1,11 +1,10 @@
-
 import { useAuth } from "@/context/AuthContext";
 import { Navigate, useNavigate } from "react-router-dom";
 import Navbar from "@/components/Navbar";
 import { BookPlus, BookUser, BookX, Book, ArrowLeft, LogOut } from "lucide-react";
 
 const Dashboard = () => {
-  const { isAuthenticated } = useAuth();
+  const { isAuthenticated, logout } = useAuth();
   const navigate = useNavigate();
 
   // If not authenticated, redirect to login
@@ -50,6 +49,7 @@ const Dashboard = () => {
       description: "Exit the application",
       path: "/logout",
       action: () => {
+        logout();
         navigate("/");
       },
     },

@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import { useAuth } from "@/context/AuthContext";
 import { Navigate, useNavigate } from "react-router-dom";
@@ -18,8 +17,10 @@ const AddBook = () => {
   // Form state
   const [title, setTitle] = useState("");
   const [author, setAuthor] = useState("");
-  const [isbn, setIsbn] = useState("");
   const [quantity, setQuantity] = useState(1);
+  const [description, setDescription] = useState("");
+  const [publishedDate, setPublishedDate] = useState("");
+  const [coverImage, setCoverImage] = useState<File | null>(null);
 
   // If not authenticated, redirect to login
   if (!isAuthenticated) {
@@ -35,13 +36,15 @@ const AddBook = () => {
       const bookData = {
         title,
         author,
-        isbn,
-        quantity: Number(quantity)
+        quantity: Number(quantity),
+        description,
+        published_date: publishedDate,
+        cover_image: coverImage,
       };
-      
+
       // Log the formatted JSON payload
       console.log('Book data payload:', JSON.stringify(bookData));
-      
+
       await api.addBook(bookData);
 
       toast({
@@ -52,8 +55,10 @@ const AddBook = () => {
       // Reset form
       setTitle("");
       setAuthor("");
-      setIsbn("");
       setQuantity(1);
+      setDescription("");
+      setPublishedDate("");
+      setCoverImage(null);
     } catch (error) {
       toast({
         title: "Error",
@@ -106,17 +111,6 @@ const AddBook = () => {
             </div>
 
             <div className="space-y-2">
-              <Label htmlFor="isbn">ISBN</Label>
-              <Input
-                id="isbn"
-                placeholder="Enter ISBN number"
-                value={isbn}
-                onChange={(e) => setIsbn(e.target.value)}
-                required
-              />
-            </div>
-
-            <div className="space-y-2">
               <Label htmlFor="quantity">Quantity</Label>
               <Input
                 id="quantity"
@@ -125,6 +119,34 @@ const AddBook = () => {
                 value={quantity}
                 onChange={(e) => setQuantity(Number(e.target.value))}
                 required
+              />
+            </div>
+
+            <div className="space-y-2">
+              <Label htmlFor="description">Description</Label>
+              <Input
+                id="description"
+                placeholder="Enter book description"
+                value={description}
+                onChange={(e) => setDescription(e.target.value)}
+              />
+            </div>
+            <div className="space-y-2">
+              <Label htmlFor="publishedDate">Published Date</Label>
+              <Input
+                id="publishedDate"
+                type="date"
+                value={publishedDate}
+                onChange={(e) => setPublishedDate(e.target.value)}
+              />
+            </div>
+            <div className="space-y-2">
+              <Label htmlFor="coverImage">Cover Image</Label>
+              <Input
+                id="coverImage"
+                type="file"
+                accept="image/*"
+                onChange={(e) => setCoverImage(e.target.files ? e.target.files[0] : null)}
               />
             </div>
 
