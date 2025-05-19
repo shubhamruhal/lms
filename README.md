@@ -66,6 +66,8 @@ frontend/   # React frontend (UI, API calls)
 
 ## Screenshots
 - Dashboard
+- ![image](https://github.com/user-attachments/assets/efef764e-611f-4496-893b-ae9f9f63b727)
+
 - Book List
 - Add Book
 - Issue/Return Book
